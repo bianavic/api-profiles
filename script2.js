@@ -1,42 +1,49 @@
-const app = document.getElementById('root');
-const authors = document.createElement('div');
-authors.setAttribute('class', 'authors');
-app.appendChild(authors);
+const corpo = document.getElementsByTagName('body')[0];
+const root = document.createElement('div');
+root.setAttribute('id', 'root');
+corpo.appendChild(root);
+
+const colab = document.createElement('h1');
+colab.innerHTML = 'Colaboradores';
+root.appendChild(colab);
+
+const autor = document.createElement('div');
+autor.setAttribute('class', 'authors');
+root.appendChild(autor);
 
 fetch('https://randomuser.me/api/?results=10')
 .then(function(response){
-    return response.json();
+    return response.json()
 })
 .then(function(data){
-    console.log("SUCESSO!!")
     console.log(data)
-    data.results.forEach(pessoas => {
-        const card=document.createElement('div');
-        card.setAttribute('class', 'card');
-        authors.appendChild(card);
+    console.log('top')
 
-        const img = document.createElement('img');
-        img.setAttribute("src", pessoas.picture.large);
-        card.appendChild(img);
+    data.results.forEach(element => { 
+        const card = document.createElement("div")
+        card.setAttribute("class", "card")
+        autor.appendChild(card)
 
-        const name = document.createElement('h2');
-        name.textContent = pessoas.name.first + " " + pessoas.name.last;
-        card.appendChild(name);
+        let imagem = document.createElement('img')
+        imagem.setAttribute('src', element.picture.large)
+        card.appendChild(imagem)
 
-        const local = document.createElement('h3');
-        local.textContent = pessoas.location.city + ", " + pessoas.nat;
-        card.appendChild(local);
+        let nome = document.createElement('h2')
+        nome.innerHTML = element.name.first + ' ' + element.name.last
+        card.appendChild(nome)
 
-        const email = document.createElement('p');
-        email.textContent = pessoas.email;
-        card.appendChild(email);
+        let local = document.createElement('h3')
+        local.innerHTML = element.location.city + ', ' + element.nat
+        card.appendChild(local)
 
-        const phone = document.createElement ('p');
-        phone.textContent = pessoas.cell;
-        card.appendChild(phone);
+        let email = document.createElement('p')
+        email.innerHTML = element.email
+        card.appendChild(email)
 
-    });
-    
+        let tel = document.createElement('p')
+        tel.innerHTML = element.cell
+        card.appendChild(tel)
+    })  
 })
 .catch(function(erro){
     console.log(erro)
